@@ -29,16 +29,16 @@
                 {"type":"static", "command":".", "itemtype":"tile", "itemaction":"", "itemimage": "$CatURL"},
                 {"type":"http-get", 
                   "command": "https://opentdb.com/api.php?amount=$Number&category=$Category&difficulty=$Difficulty&encode=url3986", 
-                  "queryresult": "$.results.*", "itemlabel": "DYNAMIK \"$ListIndex/$Number - \" + decodeURI(String(JSON.parse(\"$Result\").category))", 
-                  "itemname": "DYNAMIK decodeURI(String(JSON.parse(\"$Result\").question))", 
+                  "queryresult": "$.results.*", "itemlabel": "DYNAMIK \"$ListIndex/$Number - \" + decodeURIComponent(JSON.parse(\"$Result\").category)", 
+                  "itemname": "DYNAMIK decodeURIComponent(JSON.parse(\"$Result\").question)", 
                   "itemimage": "https://raw.githubusercontent.com/jac459/meta-trivia/main/pics/trivia.jpg",
-                  "evalwrite": [{"variable": "Question", "value": "DYNAMIK decodeURI(String(JSON.parse(\"$Result\").question))"}, {"variable": "Answers", "value": "DYNAMIK let r; if (Array.isArray(JSON.parse(\"$Result\").incorrect_answers)) {r = JSON.parse(\"$Result\").incorrect_answers; r.push(JSON.parse(\"$Result\").correct_answer)} else {r = String(JSON.parse(\"$Result\").incorrect_answers).split(\",\");r.push(JSON.parse(\"$Result\").correct_answer)}; JSON.stringify(r);"}], "evalnext":[{"test":true, "then":"Answers", "or":""}]
+                  "evalwrite": [{"variable": "Question", "value": "DYNAMIK decodeURIComponent(String(JSON.parse(\"$Result\").question))"}, {"variable": "Answers", "value": "DYNAMIK let r; if (Array.isArray(JSON.parse(\"$Result\").incorrect_answers)) {r = JSON.parse(\"$Result\").incorrect_answers; r.push(JSON.parse(\"$Result\").correct_answer)} else {r = String(JSON.parse(\"$Result\").incorrect_answers).split(\",\");r.push(JSON.parse(\"$Result\").correct_answer)}; JSON.stringify(r);"}], "evalnext":[{"test":true, "then":"Answers", "or":""}]
                 }]},
               "Answers":{"label":"", "commandset": [
                 {"type":"static", "command":".","itemname": "$Question","itemlabel": "$Question", "itemtype":"info"},
                 {"type":"static", "command":".","itemname": "Choose your answer, click (i)", "itemtype":"button"},
                 {"type":"static", 
-                "command": "DYNAMIK let Resu = [];let Tab = $Answers;let Ran = Math.floor(Math.random()*Tab.length);for (let i = 0; i < Tab.length; i++) { if ((i+Ran)<Tab.length-1) {Resu.push({\"answer\":String(Tab[i+Ran]),\"good\":false})} else if ((i+Ran)==Tab.length-1) {Resu.push({\"answer\":String(Tab[i+Ran]),\"good\":true})} else if ((i+Ran)>Tab.length-1) {Resu.push({\"answer\":String(Tab[i+Ran-Tab.length]),\"good\":false})} };Resu;", "queryresult": "$.*", "itemname": "DYNAMIK decodeURI(String(JSON.parse(\"$Result\").answer))", "itemlabel": "DYNAMIK if (JSON.parse(\"$Result\").good) {\"Congratulations, this is the correct answer.\"} else {\"Sorry, it is wrong, try again.\"}", "itemtype":"info"
+                "command": "DYNAMIK let Resu = [];let Tab = $Answers;let Ran = Math.floor(Math.random()*Tab.length);for (let i = 0; i < Tab.length; i++) { if ((i+Ran)<Tab.length-1) {Resu.push({\"answer\":String(Tab[i+Ran]),\"good\":false})} else if ((i+Ran)==Tab.length-1) {Resu.push({\"answer\":String(Tab[i+Ran]),\"good\":true})} else if ((i+Ran)>Tab.length-1) {Resu.push({\"answer\":String(Tab[i+Ran-Tab.length]),\"good\":false})} };Resu;", "queryresult": "$.*", "itemname": "DYNAMIK decodeURIComponent(String(JSON.parse(\"$Result\").answer))", "itemlabel": "DYNAMIK if (JSON.parse(\"$Result\").good) {\"Congratulations, this is the correct answer.\"} else {\"Sorry, it is wrong, try again.\"}", "itemtype":"info"
               }]},
               "Settings":{"label":"", "commandset": [
                 {"type":"static", "command":".","itemname": "Choose your game difficulty", "itemtype":"button"},
